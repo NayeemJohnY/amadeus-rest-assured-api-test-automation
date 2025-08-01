@@ -1,0 +1,118 @@
+{
+    "airportQueries": [
+        {
+            "keyword": "Chennai",
+            "countryCode": "IN",
+            "expected": [
+                {
+                    "type": "location",
+                    "subType": "CITY",
+                    "name": "CHENNAI",
+                    "detailedName": "CHENNAI/TN/IN",
+                    "timeZoneOffset": "+05:30",
+                    "iataCode": "MAA",
+                    "address": {
+                        "cityName": "CHENNAI",
+                        "cityCode": "MAA",
+                        "countryName": "INDIA",
+                        "countryCode": "IN",
+                        "stateCode": "TN",
+                        "regionCode": "ASIA"
+                    }
+                },
+                {
+                    "type": "location",
+                    "subType": "AIRPORT",
+                    "name": "CHENNAI INTERNATIONAL",
+                    "detailedName": "CHENNAI/TN/IN:CHENNAI INTERNAT",
+                    "timeZoneOffset": "+05:30",
+                    "iataCode": "MAA",
+                    "address": {
+                        "cityName": "CHENNAI",
+                        "cityCode": "MAA",
+                        "countryName": "INDIA",
+                        "countryCode": "IN",
+                        "stateCode": "TN",
+                        "regionCode": "ASIA"
+                    }
+                }
+            ]
+        },
+        {
+            "keyword": "Ben",
+            "countryCode": "IN",
+            "expected": [
+                {
+                    "type": "location",
+                    "subType": "CITY",
+                    "name": "BENGALURU",
+                    "detailedName": "BENGALURU/KA/IN",
+                    "timeZoneOffset": "+05:30",
+                    "iataCode": "BLR",
+                    "address": {
+                        "cityName": "BENGALURU",
+                        "cityCode": "BLR",
+                        "countryName": "INDIA",
+                        "countryCode": "IN",
+                        "stateCode": "KA",
+                        "regionCode": "ASIA"
+                    }
+                },
+                {
+                    "type": "location",
+                    "subType": "AIRPORT",
+                    "name": "KEMPEGOWDA INTL",
+                    "detailedName": "BENGALURU/KA/IN:KEMPEGOWDA INT",
+                    "timeZoneOffset": "+05:30",
+                    "iataCode": "BLR",
+                    "address": {
+                        "cityName": "BENGALURU",
+                        "cityCode": "BLR",
+                        "countryName": "INDIA",
+                        "countryCode": "IN",
+                        "stateCode": "KA",
+                        "regionCode": "ASIA"
+                    }
+                }
+            ]
+        },
+        {
+            "keyword": "DL",
+            "countryCode": "IN",
+            "expected": [
+                {
+                    "type": "location",
+                    "subType": "CITY",
+                    "name": "DELHI",
+                    "detailedName": "DELHI/DL/IN",
+                    "timeZoneOffset": "+05:30",
+                    "iataCode": "DEL",
+                    "address": {
+                        "cityName": "DELHI",
+                        "cityCode": "DEL",
+                        "countryName": "INDIA",
+                        "countryCode": "IN",
+                        "stateCode": "DL",
+                        "regionCode": "ASIA"
+                    }
+                },
+                {
+                    "type": "location",
+                    "subType": "AIRPORT",
+                    "name": "INDIRA GANDHI INTL",
+                    "detailedName": "DELHI/DL/IN:INDIRA GANDHI INTL",
+                    "timeZoneOffset": "+05:30",
+                    "iataCode": "DEL",
+                    "address": {
+                        "cityName": "DELHI",
+                        "cityCode": "DEL",
+                        "countryName": "INDIA",
+                        "countryCode": "IN",
+                        "stateCode": "DL",
+                        "regionCode": "ASIA"
+                    }
+                }
+            ]
+        }
+    ]
+}

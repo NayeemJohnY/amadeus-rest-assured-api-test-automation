@@ -1,0 +1,29 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Amadeus-API-Test-Automation" verbose="1" parallel="false">
+    <listeners>
+        <listener class-name="testUtils.TestResultLoggerListener"></listener>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg" />
+    </listeners>
+    <test name="AirportReferenceLocationQuery">
+        <classes>
+            <class name="tests.airports.AirportReferenceLocationTest" />
+        </classes>
+    </test>
+    <test name="FlightOffersSearch">
+        <classes>
+            <class name="tests.flights.FlightOffersTest" />
+            <class name="tests.flights.FlightInspirationTest" />
+        </classes>
+    </test>
+    <test name="CarAndTransferOffers">
+        <classes>
+            <class name="tests.carAndTransfers.TransferOffersTest" />
+        </classes>
+    </test>
+    <test name="DestinationExperiences">
+        <classes>
+            <class name="tests.destinationExperiences.ToursAndActivitesTest" />
+        </classes>
+    </test>
+</suite>
