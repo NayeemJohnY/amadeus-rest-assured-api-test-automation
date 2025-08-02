@@ -74,7 +74,7 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <AMADEUS_TEST_SECRET>${env.AMADEUS_TEST_SECRET}</AMADEUS_TEST_SECRET>
