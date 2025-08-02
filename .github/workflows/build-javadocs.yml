@@ -3,6 +3,9 @@ name: Build and Publish Javadocs
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,7 +24,6 @@ jobs:
         shell: bash
         run: |
           cp -r target/reports github-pages/javadocs
-          
 
       - name: Setup Github Pages
         uses: actions/configure-pages@v5
