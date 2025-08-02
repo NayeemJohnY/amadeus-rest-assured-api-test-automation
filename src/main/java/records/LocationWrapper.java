@@ -1,10 +1,13 @@
 package records;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record LocationWrapper(List<Location> data) {
-
-}
+/**
+ * Record for wrapping location data from API responses.
+ * Ignores unknown JSON properties during deserialization.
+ *
+ * @param data list of location objects from the API response
+ */
+public record LocationWrapper(List<Location> data) {}
