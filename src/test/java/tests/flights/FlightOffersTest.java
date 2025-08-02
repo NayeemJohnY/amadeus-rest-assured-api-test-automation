@@ -135,12 +135,12 @@ public class FlightOffersTest extends BaseTest {
   public Object[][] getvalidAirLineQuery() {
     LocalDateTime todaysDateTime = LocalDateTime.now();
     LocalDate date =
-        todaysDateTime.getHour() < 16
+        todaysDateTime.getHour() < 12
             ? todaysDateTime.toLocalDate()
-            : todaysDateTime.plusHours(10).toLocalDate();
+            : todaysDateTime.plusHours(12).toLocalDate();
     return new Object[][] {
       {"BLR", "MAA", date.toString(), null, 3},
-      {"BLR", "MAA", date.toString(), date.toString(), 3},
+      {"BLR", "DEL", date.toString(), date.toString(), 3},
       {"BLR", "DEL", date.toString(), date.plusDays(3).toString(), 1},
       {"DEL", "MAA", date.plusDays(5).toString(), date.plusDays(10).toString(), 1}
     };
@@ -194,9 +194,9 @@ public class FlightOffersTest extends BaseTest {
   public Object[][] getInvalidAirLineQuery() {
     LocalDateTime todaysDateTime = LocalDateTime.now();
     LocalDate date =
-        todaysDateTime.getHour() < 16
+        todaysDateTime.getHour() < 12
             ? todaysDateTime.toLocalDate()
-            : todaysDateTime.plusHours(10).toLocalDate();
+            : todaysDateTime.plusHours(12).toLocalDate();
     return new Object[][] {
       {
         "BLR",
