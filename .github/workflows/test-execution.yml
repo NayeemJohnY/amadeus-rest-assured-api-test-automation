@@ -29,6 +29,7 @@ jobs:
           ln -s /opt/allure/bin/allure /usr/bin/allure
 
       - name: Download Allure History from Previous Run
+        if: success() || failure()
         uses: actions/download-artifact@v4
         with:
           name: test-results
@@ -41,6 +42,7 @@ jobs:
         run: |
           if [ -d test-results-prev-run/allure-report/history ]; then
             cp -r test-results-prev-run/allure-report/history test-results/allure-results/history
+            echo "Allure history copied from previous run."
           fi
 
           allure generate test-results/allure-results --clean -o test-results/allure-report
@@ -51,3 +53,21 @@ jobs:
         with:
           name: test-results
           path: test-results
+      
+      - name: Prepare Allure Report for Github Pages
+        if: success() || failure()
+        shell: bash
+        run: |
+          scp -r test-results/allure-report github-pages/allure-report
+
+      - name: Setup Github Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Allure Report to Github Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "github-pages/"
+
+      - name: Publish Allure Report to Github Pages
+        id: publish
+        uses: actions/deploy-pages@v4

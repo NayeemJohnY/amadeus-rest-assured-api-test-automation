@@ -2,6 +2,7 @@
 
 <suite name="Amadeus-API-Test-Automation" verbose="1" parallel="false">
     <listeners>
+        <listener class-name="testUtils.AnnotationTransformer"></listener>
         <listener class-name="testUtils.TestResultLoggerListener"></listener>
         <listener class-name="io.qameta.allure.testng.AllureTestNg" />
     </listeners>

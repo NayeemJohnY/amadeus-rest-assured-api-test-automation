@@ -1,0 +1,36 @@
+name: Build and Publish Javadocs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    container:
+      image: maven:3.9.6-eclipse-temurin-21
+
+    steps:
+      - name: Checkout the Repository to Runner
+        uses: actions/checkout@v4
+
+      - name: Build Maven Javadocs
+        run: mvn javadoc:javadoc javadoc:test-javadoc
+
+      - name: Prepare Javadocs for Github Pages
+        shell: bash
+        run: |
+          scp -r target/reports github-pages/javadocs
+          
+
+      - name: Setup Github Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Javadocs to Github Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "github-pages/"
+
+      - name: Publish Javadocs to Github Pages
+        id: publish
+        uses: actions/deploy-pages@v4

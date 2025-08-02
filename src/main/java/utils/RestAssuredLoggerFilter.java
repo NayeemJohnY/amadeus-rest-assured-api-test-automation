@@ -7,6 +7,8 @@ import io.restassured.specification.FilterableRequestSpecification;
 import io.restassured.specification.FilterableResponseSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.testng.ITestResult;
+import org.testng.Reporter;
 
 /**
  * A Rest-Assured filter that logs HTTP request and response details using Log4j2. This filter can
@@ -48,6 +50,11 @@ public class RestAssuredLoggerFilter implements Filter {
 
     logger.info("Response Status: {}", response.getStatusCode());
     logger.debug("Response Body: {}", response.getBody().asPrettyString());
+
+    ITestResult result = Reporter.getCurrentTestResult();
+    if (result != null){
+      result.setAttribute("statusCode", response.getStatusCode());
+    }
 
     return response;
   }

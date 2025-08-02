@@ -10,6 +10,7 @@
 
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testng.version>7.11.0</testng.version>
         <restassured.version>5.5.5</restassured.version>
         <jackson.version>2.19.2</jackson.version>
