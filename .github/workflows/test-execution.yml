@@ -58,7 +58,7 @@ jobs:
         if: success() || failure()
         shell: bash
         run: |
-          scp -r test-results/allure-report github-pages/allure-report
+          cp -r test-results/allure-report github-pages/allure-report
 
       - name: Setup Github Pages
         uses: actions/configure-pages@v5

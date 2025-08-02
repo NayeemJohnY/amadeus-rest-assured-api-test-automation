@@ -20,7 +20,7 @@ jobs:
       - name: Prepare Javadocs for Github Pages
         shell: bash
         run: |
-          scp -r target/reports github-pages/javadocs
+          cp -r target/reports github-pages/javadocs
           
 
       - name: Setup Github Pages
