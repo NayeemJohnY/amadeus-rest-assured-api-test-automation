@@ -19,6 +19,13 @@ jobs:
       - name: Checkout the Repository to Runner
         uses: actions/checkout@v4
 
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: /root/.m2/repository  # Important: path must match inside container
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-
+
       - name: Build Maven Javadocs
         run: mvn javadoc:javadoc javadoc:test-javadoc
 
