@@ -32,13 +32,17 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: test-results
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           path: test-results-prev-run
         continue-on-error: true
 
       - name: Generate Allure Report
         if: success() || failure()
         run: |
-          cp -r  test-results-prev-run/allure-report/history test-results/allure-results/history
+          if [ -d test-results-prev-run/allure-report/history ]; then
+            cp -r test-results-prev-run/allure-report/history test-results/allure-results/history
+          fi
+
           allure generate test-results/allure-results --clean -o test-results/allure-report
 
       - name: Upload Test Results
