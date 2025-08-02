@@ -95,13 +95,16 @@ jobs:
           cp -r test-results/allure-report github-pages/allure-report
 
       - name: Setup Github Pages
+        if: success() || failure()
         uses: actions/configure-pages@v5
 
       - name: Upload Allure Report to Github Pages
+        if: success() || failure()
         uses: actions/upload-pages-artifact@v3
         with:
           path: "github-pages/"
 
       - name: Publish Allure Report to Github Pages
+        if: success() || failure()
         id: publish
         uses: actions/deploy-pages@v4
