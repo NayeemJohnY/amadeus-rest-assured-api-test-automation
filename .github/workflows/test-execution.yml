@@ -1,10 +1,39 @@
 name: Test Execution and Publish Report
 
 on:
-    workflow_dispatch:
+  workflow_dispatch:
+
+env:
+  AMADEUS_TEST_SECRET: ${{ secrets.AMADEUS_TEST_SECRET }}
 
 jobs:
-    test-execution:
-        runs-on: ubuntu-latest
-    
+  test-execution:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    container:
+      image: maven:3.9.6-eclipse-temurin-21
 
+    steps:
+      - name: Checkout the Repository to Runner
+        uses: actions/checkout@v4
+
+      - name: Execute Test
+        run: mvn clean test
+
+      - name: Install Allure CLI
+        run: |
+          curl -o allure-2.27.0.tgz -L https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
+          tar -xzf allure-2.27.0.tgz
+          mv allure-2.27.0 /opt/allure
+          ln -s /opt/allure/bin/allure /usr/bin/allure
+
+      - name: Generate Allure Report
+        if: success() || failure()
+        run: allure generate test-results/allure-results --clean -o test-results/allure-report
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results
