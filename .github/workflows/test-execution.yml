@@ -41,6 +41,7 @@ jobs:
           ln -s /opt/allure/bin/allure /usr/bin/allure
 
       - name: Get Previous Test Execution Workflow Run ID
+        if: success() || failure()
         id: get-run-id
         uses: actions/github-script@v7
         with:
