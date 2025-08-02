@@ -30,6 +30,11 @@ jobs:
       - name: Setup Github Pages
         uses: actions/configure-pages@v5
 
+      - name: Upload Javadocs to Github Pages
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: "github-pages/"
+
       - name: Publish Javadocs to Github Pages
         id: publish
         uses: actions/deploy-pages@v4
