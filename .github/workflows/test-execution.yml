@@ -3,6 +3,11 @@ name: Test Execution and Publish Report
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+  pages: write
+
 env:
   AMADEUS_TEST_SECRET: ${{ secrets.AMADEUS_TEST_SECRET }}
 
@@ -16,6 +21,13 @@ jobs:
     steps:
       - name: Checkout the Repository to Runner
         uses: actions/checkout@v4
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: /root/.m2/repository  # Important: path must match inside container
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-
 
       - name: Execute Test
         run: mvn clean test
