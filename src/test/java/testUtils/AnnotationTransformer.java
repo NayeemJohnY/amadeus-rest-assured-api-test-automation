@@ -7,8 +7,8 @@ import org.testng.IRetryAnalyzer;
 import org.testng.annotations.ITestAnnotation;
 
 /**
- * TestNG annotation transformer that automatically assigns a retry analyzer to test methods.
- * This enables automatic retry of failed tests based on custom logic in {@link RetryAnalyzer}.
+ * TestNG annotation transformer that automatically assigns a retry analyzer to test methods. This
+ * enables automatic retry of failed tests based on custom logic in {@link RetryAnalyzer}.
  */
 public class AnnotationTransformer implements IAnnotationTransformer {
 
@@ -25,7 +25,8 @@ public class AnnotationTransformer implements IAnnotationTransformer {
       ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod) {
 
     Class<? extends IRetryAnalyzer> retyAnalyzer = annotation.getRetryAnalyzerClass();
-    if (retyAnalyzer == null) {
+    if (retyAnalyzer == null
+        || retyAnalyzer.getName().equals("org.testng.internal.annotations.DisabledRetryAnalyzer")) {
       annotation.setRetryAnalyzer(RetryAnalyzer.class);
     }
   }

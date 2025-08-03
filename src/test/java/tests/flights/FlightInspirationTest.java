@@ -31,7 +31,7 @@ public class FlightInspirationTest extends BaseTest {
    */
   @Test
   @Description("Test Cheapest Flight Date Search is Sorted by Price")
-  public void testChepestFlightDateSearchIsSortedbyProce() {
+  public void testChepestFlightDateSearchIsSortedbyPrice() {
 
     Response response =
         RestAssured.given()

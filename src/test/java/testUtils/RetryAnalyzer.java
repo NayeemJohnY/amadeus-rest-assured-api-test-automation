@@ -27,9 +27,15 @@ public class RetryAnalyzer implements IRetryAnalyzer {
     Object statusCode = result.getAttribute("statusCode");
     if (statusCode instanceof Integer && (int) statusCode == 429 && retryCount < maxRetryCount) {
       retryCount++;
-      String message = "Retrying test due to 429 Too Many Requests (attempt " + retryCount + ")";
+      String message =
+          "Retrying test after 5 seconds due to 429 Too Many Requests (attempt " + retryCount + ")";
       logger.info(message);
       Allure.step(message);
+      try {
+        Thread.sleep(5000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
       return true;
     }
     return false;
