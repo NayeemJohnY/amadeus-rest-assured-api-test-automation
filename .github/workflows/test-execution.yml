@@ -43,24 +43,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     container:
-      image: ghcr.io/allure-framework/allure:2.27.0
+      image: frankescobar/allure-docker-service:2.27.0
 
     steps:
-      - name: Cache Allure CLI
-        id: cache-allure
-        uses: actions/cache@v4
-        with:
-          path: /opt/allure
-          key: allure-2.27.0
-
-      - name: Install Allure CLI
-        if: steps.cache-allure.outputs.cache-hit != 'true'
-        run: |
-          curl -o allure-2.27.0.tgz -L https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
-          tar -xzf allure-2.27.0.tgz
-          sudo mv allure-2.27.0 /opt/allure
-          sudo ln -sf /opt/allure/bin/allure /usr/bin/allure
-
       - name: Download Current Test Execution Test Results
         uses: actions/download-artifact@v4
         with:
