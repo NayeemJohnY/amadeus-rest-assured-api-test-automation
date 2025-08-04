@@ -32,15 +32,8 @@ jobs:
       - name: Execute Test
         run: mvn clean test
 
-      - name: Cache Allure CLI
-        id: cache-allure
-        uses: actions/cache@v4
-        with:
-          path: /opt/allure
-          key: allure-2.27.0
-
       - name: Install Allure CLI
-        if: steps.cache-allure.outputs.cache-hit != 'true'
+        if: success() || failure()
         run: |
           curl -o allure-2.27.0.tgz -L https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
           tar -xzf allure-2.27.0.tgz
@@ -102,17 +95,4 @@ jobs:
         run: |
           cp -r test-results/allure-report github-pages/allure-report
 
-      - name: Setup Github Pages
-        if: success() || failure()
-        uses: actions/configure-pages@v5
-
-      - name: Upload Allure Report to Github Pages
-        if: success() || failure()
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: "github-pages/"
-
-      - name: Publish Allure Report to Github Pages
-        if: success() || failure()
-        id: publish
-        uses: actions/deploy-pages@v4
+      - uses: ./.github/publish-github-pages

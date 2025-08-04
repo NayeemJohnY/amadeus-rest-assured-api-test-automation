@@ -1,11 +1,18 @@
 # Amadeus Rest Assured API Test Automation
 
+[![Latest Test Execution](https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/actions/workflows/test-execution.yml/badge.svg)](https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/actions/workflows/test-execution.yml)
+
 ## Quick Links
 
 :link: [Framework Q&A (Story & Design)](https://nayeemjohny.github.io/amadeus-rest-assured-api-test-automation/index.html)
+
 :link: [Sample Allure Report](https://nayeemjohny.github.io/amadeus-rest-assured-api-test-automation/allure-report/index.html)
+
 :link: [Java APIDocs](https://nayeemjohny.github.io/amadeus-rest-assured-api-test-automation/javadocs/apidocs/index.html)
-:link: [Test APIDocs](https://nayeemjohny.github.io/amadeus-rest-assured-api-test-automation/javadocs/testapidocs/index.html)
+
+:link: [Test APIDocs](https://nayeemjohny.github.io/
+amadeus-rest-assured-api-test-automation/javadocs/testapidocs/index.html)
+
 
 ## Overview
 This project is an API Test Automation framework built using Java, Rest Assured, and TestNG. It is designed to automate the testing of Amadeus APIs, providing robust reporting, logging, and maintainable test structure. The framework supports parameterized tests, data-driven testing, and integrates with Allure for rich test reports.
