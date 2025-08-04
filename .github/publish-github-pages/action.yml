@@ -14,6 +14,7 @@ runs:
       uses: actions/upload-pages-artifact@v3
       with:
         path: "github-pages/"
+        retention-days: 3
 
     - name: Publish Github Pages
       if: success() || failure()
