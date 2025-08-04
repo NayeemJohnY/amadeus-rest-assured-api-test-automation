@@ -58,9 +58,10 @@ jobs:
             if (!previousRun) {
               core.info("No previous run found — skipping history copy.");
               core.setOutput("run_id", "");
+            } else {
+              core.info(`Previous run ID: ${previousRun.id}`);
+              core.setOutput("run_id", previousRun.id);
             }
-
-            core.setOutput("run_id", previousRun.id);
 
       - name: Download Allure History from Previous Run
         if: success() || failure()
