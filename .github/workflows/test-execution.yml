@@ -97,5 +97,13 @@ jobs:
         run: |
           cp -r test-results/allure-report github-pages/allure-report
 
+      - name: Build Maven Javadocs
+        run: mvn javadoc:javadoc javadoc:test-javadoc
+
+      - name: Prepare Javadocs for Github Pages
+        shell: bash
+        run: |
+          cp -r target/reports github-pages/javadocs
+
       - name: Publish Allure Report to Github Pages
         uses: ./.github/publish-github-pages

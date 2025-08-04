@@ -10,8 +10,7 @@
 
 :link: [Java APIDocs](https://nayeemjohny.github.io/amadeus-rest-assured-api-test-automation/javadocs/apidocs/index.html)
 
-:link: [Test APIDocs](https://nayeemjohny.github.io/
-amadeus-rest-assured-api-test-automation/javadocs/testapidocs/index.html)
+:link: [Test APIDocs](https://nayeemjohny.github.io/amadeus-rest-assured-api-test-automation/javadocs/testapidocs/index.html)
 
 
 ## Overview
