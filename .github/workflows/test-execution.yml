@@ -95,4 +95,5 @@ jobs:
         run: |
           cp -r test-results/allure-report github-pages/allure-report
 
-      - uses: ./.github/publish-github-pages
+      - name: Publish Allure Report to Github Pages
+        uses: ./.github/publish-github-pages

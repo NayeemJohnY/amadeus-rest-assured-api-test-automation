@@ -34,4 +34,5 @@ jobs:
         run: |
           cp -r target/reports github-pages/javadocs
 
-      - uses: ./.github/publish-github-pages
+      - name: Publish Javadocs to Github Pages 
+        uses: ./.github/publish-github-pages
