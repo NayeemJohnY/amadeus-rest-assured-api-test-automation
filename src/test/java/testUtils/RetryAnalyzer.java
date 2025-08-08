@@ -29,7 +29,7 @@ public class RetryAnalyzer implements IRetryAnalyzer {
       retryCount++;
       String message =
           "Retrying test after 5 seconds due to 429 Too Many Requests (attempt " + retryCount + ")";
-      logger.info(message);
+      logger.warn(message);
       Allure.step(message);
       try {
         Thread.sleep(5000);
