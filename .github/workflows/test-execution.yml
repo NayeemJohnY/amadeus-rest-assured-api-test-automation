@@ -98,12 +98,15 @@ jobs:
           cp -r test-results/allure-report github-pages/allure-report
 
       - name: Build Maven Javadocs
+        if: success() || failure()
         run: mvn javadoc:javadoc javadoc:test-javadoc
 
       - name: Prepare Javadocs for Github Pages
+        if: success() || failure()
         shell: bash
         run: |
           cp -r target/reports github-pages/javadocs
 
       - name: Publish Allure Report to Github Pages
+        if: success() || failure()
         uses: ./.github/publish-github-pages
