@@ -66,6 +66,11 @@ This project is an API Test Automation framework built using Java, Rest Assured,
 - **Parallel Test Execution:**
   - Framework supports parallel test execution at both method and class levels through TestNG configuration, with thread-safe token management ensuring no conflicts during concurrent runs.
 
+- **Test Groups & Categorization:**
+  - Tests are organized into logical groups using TestNG's `@Test(groups = {...})` annotation for flexible test execution:
+    - **smoke**: Critical test cases that validate core API functionality and essential business flows
+    - **regression**: Comprehensive test coverage including both positive and negative scenarios for thorough validation
+
 
 ## About the Framework
 
@@ -174,7 +179,17 @@ You can override the encryption key for testing purposes by setting:
    ```
 4. **Run tests:**
    ```sh
+   # Run all tests
    mvn test
+   
+   # Run only smoke tests (critical functionality)
+   mvn test -Dgroups=smoke
+   
+   # Run only regression tests (comprehensive coverage)
+   mvn test -Dgroups=regression
+   
+   # Run with parallel execution
+   mvn test -DthreadCount=4 -Dparallel=methods
    ```
 5. **View Allure Report:**
    ```sh

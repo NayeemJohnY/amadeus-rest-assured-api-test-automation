@@ -147,6 +147,20 @@
                     <code>mvn test -DthreadCount=4</code>.
                 </dd>
 
+                <dt><strong>How are tests organized and categorized for flexible execution?</strong></dt>
+                <dd>A: Tests are logically organized using TestNG's <code>@Test(groups = {...})</code> annotation for targeted 
+                    execution scenarios:
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li><strong>smoke</strong>: Critical test cases that validate core API functionality and essential 
+                            business flows (e.g., basic flight search, airport lookup)</li>
+                        <li><strong>regression</strong>: Comprehensive test coverage including both positive and negative 
+                            scenarios for thorough validation (e.g., invalid parameters, edge cases)</li>
+                    </ul>
+                    This allows for flexible test execution: <code>mvn test -Dgroups=smoke</code> for quick validation, 
+                    <code>mvn test -Dgroups=regression</code> for comprehensive testing, or 
+                    <code>mvn test -Dgroups="smoke,regression"</code> for combined execution.
+                </dd>
+
                 <dt><strong>How did I make assertions and debugging more insightful?</strong></dt>
                 <dd>A: Default assertions from TestNG or Rest Assured only provide pass/fail results without detailed
                     logs.
