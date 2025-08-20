@@ -36,7 +36,7 @@ public class TransferOffersTest extends BaseTest {
    * Airport (BLR) to MTP area in Bangalore, verifying availability of private transfers and correct
    * scheduling.
    */
-  @Test
+  @Test(groups  = {"regression"})
   @Description("Test Search Transfer Offers")
   public void testSearchTransferOffers() {
 

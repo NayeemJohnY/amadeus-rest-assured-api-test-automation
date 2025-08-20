@@ -12,6 +12,16 @@ on:
         description: Run Test in Parallel
         type: boolean
         default: false
+      
+      test_name:
+        description: Test Method / Test class Name (e.g., MyTestClass#myTestMethod or MyTestClass1, MyTestClass2)
+        required: false
+        type: string
+
+      test_group:
+        description: Test Group (e.g., smoke,regression or smoke)
+        required: false
+        type: string
 
 permissions:
   id-token: write
@@ -50,6 +60,14 @@ jobs:
 
           if [ ${{ inputs.TOKEN_EXPIRY_SECONDS }} != "" ]; then
             EXTRA_PARAMS+=" -DTOKEN_EXPIRY_SECONDS=${{ inputs.TOKEN_EXPIRY_SECONDS }}";
+          fi
+
+          if [ ${{ inputs.test_name }} != "" ]; then
+            EXTRA_PARAMS+=' -Dtest="${{ inputs.TOKEN_EXPIRY_SECONDS }}"';
+          fi
+
+          if [ ${{ inputs.test_group }} != "" ]; then
+            EXTRA_PARAMS+=' -Dgroups="${{ inputs.test_group }}"';
           fi
 
           echo "Running with: mvn clean test ${EXTRA_PARAMS}"

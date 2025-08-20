@@ -70,7 +70,7 @@ public class FlightOffersTest extends BaseTest {
    * @param returnDate return date in YYYY-MM-DD format
    * @param adults number of adult passengers
    */
-  @Test(dataProvider = "Valid AirLine Query")
+  @Test(dataProvider = "Valid AirLine Query", groups = {"smoke", "regression"})
   @Description("Test Search Flight Offers With Valid Data")
   public void testValidSearchFlightOffers(
       String originLocationCode,
@@ -158,7 +158,7 @@ public class FlightOffersTest extends BaseTest {
    * @param errorTtile expected error title in the response
    * @param errorDetail expected error detail in the response
    */
-  @Test(dataProvider = "Invalid AirLine Query")
+  @Test(dataProvider = "Invalid AirLine Query", groups = {"regression"})
   @Description("Test Search Flight Offers With Invalid Data")
   public void testInvalidSearchFlightOffers(
       String originLocationCode,

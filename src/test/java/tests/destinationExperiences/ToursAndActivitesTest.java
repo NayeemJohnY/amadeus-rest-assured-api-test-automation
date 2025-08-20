@@ -33,7 +33,7 @@ public class ToursAndActivitesTest extends BaseTest {
    *
    * @param context the test context for sharing data between test methods
    */
-  @Test
+  @Test(groups = {"regression"})
   @Description("Test Search Destination Activities")
   public void testDestinationToursAndActivities(ITestContext context) {
 
@@ -65,7 +65,7 @@ public class ToursAndActivitesTest extends BaseTest {
    *
    * @param context the test context containing the activity ID and name
    */
-  @Test(dependsOnMethods = "testDestinationToursAndActivities")
+  @Test(dependsOnMethods = "testDestinationToursAndActivities", groups = {"regression"})
   @Description("Test Search Destination Activities by Activity ID")
   public void testDesintationTourAndActivityByID(ITestContext context) {
     RestAssured.given()

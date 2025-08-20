@@ -29,7 +29,7 @@ public class FlightInspirationTest extends BaseTest {
    * Tests that the flight date search results are correctly sorted by price. Verifies that flights
    * between Madrid (MAD) and London (LON) are returned in ascending order of price.
    */
-  @Test
+  @Test(groups  = {"smoke", "regression"})
   @Description("Test Cheapest Flight Date Search is Sorted by Price")
   public void testChepestFlightDateSearchIsSortedbyPrice() {
 

@@ -30,7 +30,9 @@ public class SearchHotelsTest extends BaseTest {
    *
    * @param cityCode the IATA city code to search hotels for
    */
-  @Test(dataProvider = "CityCodes")
+  @Test(
+      dataProvider = "CityCodes",
+      groups = {"regression"})
   @Description("Test Search Hotels By City Code")
   public void searchHotelsByCityCode(String cityCode) {
     RestAssured.given()

@@ -36,7 +36,7 @@ public class AirportReferenceLocationTest extends BaseTest {
    *
    * @param airportQuery the query parameters and expected results for the test
    */
-  @Test(dataProvider = "Airport Location Query")
+  @Test(dataProvider = "Airport Location Query", groups = {"smoke", "regression"})
   @Description("Test Airport Reference Data Locations")
   public void testAirportReferenceDataLocations(AirportQuery airportQuery) {
     Response response =
