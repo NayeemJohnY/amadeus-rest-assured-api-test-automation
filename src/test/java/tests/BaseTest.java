@@ -26,7 +26,7 @@ public class BaseTest {
    * Sets up suite-wide RestAssured configuration before any tests run. Adds logging filters and
    * sets the base URI for all requests.
    */
-  @BeforeSuite
+  @BeforeSuite(alwaysRun = true)
   public void setUpSuite() {
     RestAssured.filters(new RestAssuredLoggerFilter(), new AllureRestAssured());
     RestAssured.baseURI = readProperties.getProperty("baseURI");
@@ -36,7 +36,7 @@ public class BaseTest {
    * Updates the OAuth2 token before each test method to ensure valid authentication. Sets the
    * request specification with the latest token for all requests in the test.
    */
-  @BeforeMethod
+  @BeforeMethod(alwaysRun = true)
   public void updateToken() {
     try {
       String token = TokenManager.getToken();
