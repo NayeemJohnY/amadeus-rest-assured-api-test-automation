@@ -58,16 +58,16 @@ jobs:
             EXTRA_PARAMS+=" -Dparallel=true";
           fi
 
-          if [ ${{ inputs.TOKEN_EXPIRY_SECONDS }} != "" ]; then
+          if [ "${{ inputs.TOKEN_EXPIRY_SECONDS }}" != "" ]; then
             EXTRA_PARAMS+=" -DTOKEN_EXPIRY_SECONDS=${{ inputs.TOKEN_EXPIRY_SECONDS }}";
           fi
 
-          if [ ${{ inputs.test_name }} != "" ]; then
-            EXTRA_PARAMS+=' -Dtest="${{ inputs.TOKEN_EXPIRY_SECONDS }}"';
+          if [ "${{ inputs.test_name }}" != "" ]; then
+            EXTRA_PARAMS+=' -Dtest=${{ inputs.TOKEN_EXPIRY_SECONDS }}';
           fi
 
-          if [ ${{ inputs.test_group }} != "" ]; then
-            EXTRA_PARAMS+=' -Dgroups="${{ inputs.test_group }}"';
+          if [ "${{ inputs.test_group }}" != "" ]; then
+            EXTRA_PARAMS+=' -Dgroups=${{ inputs.test_group }}';
           fi
 
           echo "Running with: mvn clean test ${EXTRA_PARAMS}"
