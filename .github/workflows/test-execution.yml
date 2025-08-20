@@ -6,7 +6,7 @@ on:
       TOKEN_EXPIRY_SECONDS:
         required: false
         type: number
-        description: override Token Expiry Seconds
+        description: Token Expiry Override (Seconds)
 
       parallel:
         description: Run Test in Parallel
