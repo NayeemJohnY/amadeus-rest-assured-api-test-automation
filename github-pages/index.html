@@ -124,6 +124,29 @@
                     decryption at runtime.
                 </dd>
 
+                <dt><strong>How does the TokenManager work and why is it thread-safe?</strong></dt>
+                <dd>A: The <a
+                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/main/java/utils/TokenManager.java"
+                        target="_blank" class="code-link"><code>TokenManager.java</code></a> provides automatic OAuth2 token 
+                    lifecycle management with caching and expiry detection. It uses <code>synchronized</code> blocks to ensure 
+                    thread safety during parallel test execution. The token is refreshed 30 seconds before expiration to prevent 
+                    authentication failures. For testing purposes, the encryption key can be overridden using the 
+                    <code>TOKEN_EXPIRY_SECONDS</code> environment variable or system property. The token generation request is 
+                    isolated from global RestAssured specifications by temporarily clearing and restoring the request specification, 
+                    ensuring no test-level configurations interfere with authentication.
+                </dd>
+
+                <dt><strong>How does the framework support parallel test execution?</strong></dt>
+                <dd>A: The framework is designed for parallel execution at both method and class levels using TestNG's parallel 
+                    execution capabilities. The <code>TokenManager</code> ensures thread-safe token sharing across concurrent 
+                    threads, while the <code>BaseTest</code> class refreshes tokens before each test method to guarantee valid 
+                    authentication. Parallel execution can be configured in <a
+                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/testng.xml"
+                        target="_blank" class="code-link"><code>testng.xml</code></a> with <code>parallel="methods"</code> 
+                    or <code>parallel="classes"</code>, and thread count can be controlled via Maven with 
+                    <code>mvn test -DthreadCount=4</code>.
+                </dd>
+
                 <dt><strong>How did I make assertions and debugging more insightful?</strong></dt>
                 <dd>A: Default assertions from TestNG or Rest Assured only provide pass/fail results without detailed
                     logs.
@@ -171,7 +194,9 @@
                         href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/tree/main/src/test/java/tests/airports"
                         target="_blank" class="code-link"><code>tests.airports</code></a>, <a
                         href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/tree/main/src/test/java/tests/flights"
-                        target="_blank" class="code-link"><code>tests.flights</code></a>, and <a
+                        target="_blank" class="code-link"><code>tests.flights</code></a>, <a
+                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/tree/main/src/test/java/tests/hotels"
+                        target="_blank" class="code-link"><code>tests.hotels</code></a>, and <a
                         href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/tree/main/src/test/java/tests/destinationExperiences"
                         target="_blank" class="code-link"><code>tests.destinationExperiences</code></a>, all
                     extending <a
@@ -205,7 +230,8 @@
                                 target="_blank" class="code-link"><code>testUtils/</code></a>) and organized test
                             packages (<a
                                 href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/tree/main/src/test/java/tests"
-                                target="_blank" class="code-link"><code>tests/</code></a>) by API domain
+                                target="_blank" class="code-link"><code>tests/</code></a>) by API domain including 
+                            airports, flights, hotels, and destination experiences
                         </li>
                         <li><strong>Configuration:</strong> <a
                                 href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/pom.xml"

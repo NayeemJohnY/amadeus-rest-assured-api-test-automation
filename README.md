@@ -45,6 +45,9 @@ This project is an API Test Automation framework built using Java, Rest Assured,
 - **Secure Secret Handling:**
   - The `EncryptionUtils` utility provides AES-based encryption/decryption for sensitive credentials, ensuring secrets are not stored in plain text.
 
+- **Token Management & Authentication:**
+  - The `TokenManager` utility handles OAuth2 token lifecycle with automatic caching, expiry detection, and thread-safe refresh mechanisms. It can be overridden for testing by setting the `TOKEN_EXPIRY_SECONDS` environment variable or system property.
+
 - **Configurable Properties:**
   - The `ReadProperties` utility loads configuration from a properties file, supporting easy environment and credential management.
 
@@ -59,6 +62,9 @@ This project is an API Test Automation framework built using Java, Rest Assured,
 
 - **CI/CD Ready:**
   - Includes a sample GitHub Actions workflow for automated test execution and reporting.
+
+- **Parallel Test Execution:**
+  - Framework supports parallel test execution at both method and class levels through TestNG configuration, with thread-safe token management ensuring no conflicts during concurrent runs.
 
 
 ## About the Framework
@@ -122,9 +128,12 @@ amadeus-rest-assured/
 │       │       ├── destinationExperiences/
 │       │       │   └── ToursAndActivitesTest.java          # Destination experience API tests
 │       │       │
-│       │       └── flights/
-│       │           ├── FlightOffersTest.java               # Flight offer API tests
-│       │           └── FlightInspirationTest.java          # Flight inspiration API tests
+│       │       ├── flights/
+│       │       │   ├── FlightOffersTest.java               # Flight offer API tests
+│       │       │   └── FlightInspirationTest.java          # Flight inspiration API tests
+│       │       │
+│       │       └── hotels/
+│       │           └── SearchHotelsTest.java               # Hotel search API tests
 │       │
 │       └── resources/
 │           └── airport_locations_test_data.json            # Test data for airport locations
@@ -135,6 +144,21 @@ amadeus-rest-assured/
 ├── target/                                                 # Maven build output
 └── test-results/                                           # Test logs and results
 ```
+
+## TokenManager Mechanism
+
+The `TokenManager` class provides a robust OAuth2 authentication mechanism with the following features:
+
+- **Automatic Token Caching:** Stores access tokens in memory to avoid unnecessary API calls
+- **Expiry Management:** Refreshes tokens 30 seconds before expiration to prevent authentication failures
+- **Thread Safety:** Uses synchronized blocks to ensure safe token generation during parallel test execution
+- **Secure Credential Handling:** Decrypts encrypted client credentials using AES encryption
+- **Isolation:** Token generation requests are isolated from global RestAssured specifications to prevent conflicts
+
+### Configuration Override
+You can override the encryption key for testing purposes by setting:
+- Environment variable: `AMADEUS_TEST_SECRET`
+- System property: `-DAMADEUS_TEST_SECRET=your_key`
 
 ## Getting Started
 1. **Clone the repository:**

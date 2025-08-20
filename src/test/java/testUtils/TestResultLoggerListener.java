@@ -26,8 +26,7 @@ public class TestResultLoggerListener implements ITestListener {
     }
     params =
         Arrays.stream(params)
-            .filter(param -> param instanceof ITestContext)
-            .map(param -> "ITestContext Parameter")
+            .map(param -> (param instanceof ITestContext) ? "ITestContext Parameter" : param)
             .toArray();
     logger.info("Test Data: {}", Arrays.toString(params));
   }

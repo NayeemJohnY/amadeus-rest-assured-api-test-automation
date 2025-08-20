@@ -27,4 +27,9 @@
             <class name="tests.destinationExperiences.ToursAndActivitesTest" />
         </classes>
     </test>
+    <test name="HotelsSearch">
+        <classes>
+            <class name="tests.hotels.SearchHotelsTest" />
+        </classes>
+    </test>
 </suite>
