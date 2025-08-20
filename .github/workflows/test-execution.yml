@@ -43,11 +43,11 @@ jobs:
         run: |
           EXTRA_PARAMS=""
       
-          if [[ "${{ inputs.parallel }}" == "true" ]]; then
+          if ${{ inputs.parallel }} ; then
             EXTRA_PARAMS+=" -Dparallel=true";
           fi
 
-          if [[ -n "${{ inputs.TOKEN_EXPIRY_SECONDS }}" ]]; then
+          if [ ${{ inputs.TOKEN_EXPIRY_SECONDS }} != "" ]; then
             EXTRA_PARAMS+=" -DTOKEN_EXPIRY_SECONDS=${{ inputs.TOKEN_EXPIRY_SECONDS }}";
           fi
 
