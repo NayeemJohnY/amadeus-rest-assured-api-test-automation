@@ -2,6 +2,11 @@ package tests.hotels;
 
 import static testUtils.LoggingMatcher.log;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.RestAssured;
 import org.hamcrest.Matchers;
 import org.testng.annotations.DataProvider;
@@ -12,6 +17,9 @@ import tests.BaseTest;
  * Test class for searching hotels by city code using Amadeus API. Demonstrates data-driven testing
  * and custom assertion logging.
  */
+@Epic("Hotels Search and Booking")
+@Feature("Hotels Search")
+@Severity(SeverityLevel.NORMAL)
 public class SearchHotelsTest extends BaseTest {
 
   private static final String HOTELS_BY_CITY = readProperties.getProperty("hotelsByCity");
@@ -23,6 +31,7 @@ public class SearchHotelsTest extends BaseTest {
    * @param cityCode the IATA city code to search hotels for
    */
   @Test(dataProvider = "CityCodes")
+  @Description("Test Search Hotels By City Code")
   public void searchHotelsByCityCode(String cityCode) {
     RestAssured.given()
         .queryParam("cityCode", cityCode)
