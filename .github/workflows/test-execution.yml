@@ -63,7 +63,7 @@ jobs:
           fi
 
           if [ "${{ inputs.test_name }}" != "" ]; then
-            EXTRA_PARAMS+=' -Dtest=${{ inputs.TOKEN_EXPIRY_SECONDS }}';
+            EXTRA_PARAMS+=' -Dtest=${{ inputs.test_name }}';
           fi
 
           if [ "${{ inputs.test_group }}" != "" ]; then
