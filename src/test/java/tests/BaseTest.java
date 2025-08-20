@@ -7,6 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Listeners;
+import testUtils.AnnotationTransformer;
+import testUtils.TestResultLoggerListener;
 import utils.ReadProperties;
 import utils.RestAssuredLoggerFilter;
 import utils.TokenManager;
@@ -16,6 +19,11 @@ import utils.TokenManager;
  * and configuration. All test classes should extend this to inherit suite-level and per-method
  * setup.
  */
+@Listeners({
+  AnnotationTransformer.class,
+  TestResultLoggerListener.class,
+  io.qameta.allure.testng.AllureTestNg.class
+})
 public class BaseTest {
 
   protected static final ReadProperties readProperties = new ReadProperties();
