@@ -19,11 +19,7 @@ import utils.TokenManager;
  * and configuration. All test classes should extend this to inherit suite-level and per-method
  * setup.
  */
-@Listeners({
-  AnnotationTransformer.class,
-  TestResultLoggerListener.class,
-  io.qameta.allure.testng.AllureTestNg.class
-})
+@Listeners({TestResultLoggerListener.class, io.qameta.allure.testng.AllureTestNg.class})
 public class BaseTest {
 
   protected static final ReadProperties readProperties = new ReadProperties();
