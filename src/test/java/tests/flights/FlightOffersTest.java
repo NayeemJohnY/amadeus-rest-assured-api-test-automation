@@ -24,8 +24,8 @@ import tests.BaseTest;
  * Test class for Flight Offers API endpoints. Tests functionality for searching available flights
  * with various parameters.
  */
-@Epic("Fligts Offer Search and Booking")
-@Feature("Fligths Offer Search")
+@Epic("Flights Offer Search and Booking")
+@Feature("Flights Offer Search")
 @Severity(SeverityLevel.CRITICAL)
 public class FlightOffersTest extends BaseTest {
 
@@ -70,7 +70,9 @@ public class FlightOffersTest extends BaseTest {
    * @param returnDate return date in YYYY-MM-DD format
    * @param adults number of adult passengers
    */
-  @Test(dataProvider = "Valid AirLine Query", groups = {"smoke", "regression"})
+  @Test(
+      dataProvider = "Valid AirLine Query",
+      groups = {"smoke", "regression"})
   @Description("Test Search Flight Offers With Valid Data")
   public void testValidSearchFlightOffers(
       String originLocationCode,
@@ -105,13 +107,13 @@ public class FlightOffersTest extends BaseTest {
                 log(
                     logger,
                     Matchers.hasItem(destinationLocationCode),
-                    "Atleast One Arrival IATACode matching with destination"))
+                    "At-least One Arrival IATACode matching with destination"))
             .body(
                 "data.itineraries.segments.departure.iataCode.flatten().unique()",
                 log(
                     logger,
                     Matchers.hasItem(originLocationCode),
-                    "Atleast One Depature IATACode matching with Origin"))
+                    "At-least One Departure IATACode matching with Origin"))
             .extract()
             .response();
 
@@ -132,7 +134,7 @@ public class FlightOffersTest extends BaseTest {
    * @return an array of test data containing valid query parameters
    */
   @DataProvider(name = "Valid AirLine Query")
-  public Object[][] getvalidAirLineQuery() {
+  public Object[][] getValidAirLineQuery() {
     LocalDateTime todaysDateTime = LocalDateTime.now();
     LocalDate date =
         todaysDateTime.getHour() < 12
@@ -155,10 +157,12 @@ public class FlightOffersTest extends BaseTest {
    * @param departureDate departure date in YYYY-MM-DD format (may be invalid or null)
    * @param returnDate return date in YYYY-MM-DD format (may be invalid or null)
    * @param adults number of adult passengers (may be invalid or null)
-   * @param errorTtile expected error title in the response
+   * @param errorTitle expected error title in the response
    * @param errorDetail expected error detail in the response
    */
-  @Test(dataProvider = "Invalid AirLine Query", groups = {"regression"})
+  @Test(
+      dataProvider = "Invalid AirLine Query",
+      groups = {"regression"})
   @Description("Test Search Flight Offers With Invalid Data")
   public void testInvalidSearchFlightOffers(
       String originLocationCode,
@@ -166,7 +170,7 @@ public class FlightOffersTest extends BaseTest {
       String departureDate,
       String returnDate,
       Integer adults,
-      String errorTtile,
+      String errorTitle,
       String errorDetail) {
 
     Map<String, Object> queryParams =
@@ -180,7 +184,7 @@ public class FlightOffersTest extends BaseTest {
         .log()
         .ifValidationFails()
         .statusCode(400)
-        .body("errors[0].title", log(logger, Matchers.equalTo(errorTtile), "Error Title"))
+        .body("errors[0].title", log(logger, Matchers.equalTo(errorTitle), "Error Title"))
         .body("errors[0].detail", log(logger, Matchers.equalTo(errorDetail), "Error Detail"));
   }
 

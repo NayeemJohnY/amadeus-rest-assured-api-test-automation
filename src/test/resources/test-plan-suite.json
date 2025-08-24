@@ -1,0 +1,30 @@
+{
+    "testPlanName": "Automation Test Plan",
+    "testSuiteName": "Amadeus API Automation Test Suite",
+    "testCases": {
+        "testAirportReferenceDataLocations": {
+            "testCaseId": "TC-001"
+        },
+        "testSearchTransferOffers": {
+            "testCaseId": "TC-002"
+        },
+        "testDestinationToursAndActivities": {
+            "testCaseId": "TC-003"
+        },
+        "testDestinationTourAndActivityByID": {
+            "testCaseId": "TC-004"
+        },
+        "testCheapestFlightDateSearchIsSortedByPrice": {
+            "testCaseId": "TC-005"
+        },
+        "testValidSearchFlightOffers": {
+            "testCaseId": "TC-006"
+        },
+        "testInvalidSearchFlightOffers": {
+            "testCaseId": "TC-007"
+        },
+        "testSearchHotelsByCityCode": {
+            "testCaseId": "TC-008"
+        }
+    }
+}

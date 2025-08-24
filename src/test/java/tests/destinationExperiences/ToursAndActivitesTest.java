@@ -67,7 +67,7 @@ public class ToursAndActivitesTest extends BaseTest {
    */
   @Test(dependsOnMethods = "testDestinationToursAndActivities", groups = {"regression"})
   @Description("Test Search Destination Activities by Activity ID")
-  public void testDesintationTourAndActivityByID(ITestContext context) {
+  public void testDestinationTourAndActivityByID(ITestContext context) {
     RestAssured.given()
         .pathParam("activityID", context.getAttribute("ratedActivityID"))
         .when()

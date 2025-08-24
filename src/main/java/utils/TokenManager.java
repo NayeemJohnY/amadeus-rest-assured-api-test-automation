@@ -79,7 +79,6 @@ public class TokenManager {
 
         int expiryInSeconds = response.jsonPath().getInt("expires_in");
         // If TOKEN_EXPIRY_SECONDS is provided as System or Env property, override the expires_in
-        System.out.println("TOKEN_EXPIRY_SECONDS: " + TOKEN_EXPIRY_SECONDS);
         if (TOKEN_EXPIRY_SECONDS != null && !TOKEN_EXPIRY_SECONDS.isEmpty()) {
           expiryInSeconds = Integer.parseInt(TOKEN_EXPIRY_SECONDS);
         }

@@ -34,7 +34,7 @@ public class SearchHotelsTest extends BaseTest {
       dataProvider = "CityCodes",
       groups = {"regression"})
   @Description("Test Search Hotels By City Code")
-  public void searchHotelsByCityCode(String cityCode) {
+  public void testSearchHotelsByCityCode(String cityCode) {
     RestAssured.given()
         .queryParam("cityCode", cityCode)
         .when()

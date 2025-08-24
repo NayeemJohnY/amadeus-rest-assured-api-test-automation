@@ -18,8 +18,8 @@ import tests.BaseTest;
  * Test class for Flight Inspiration Search API endpoints. Tests functionality for finding and
  * validating cheapest flight dates.
  */
-@Epic("Chepeast Flight Date Search")
-@Feature("Chepeast Flight Date Search")
+@Epic("Cheapest Flight Date Search")
+@Feature("Cheapest Flight Date Search")
 @Severity(SeverityLevel.NORMAL)
 public class FlightInspirationTest extends BaseTest {
 
@@ -31,7 +31,7 @@ public class FlightInspirationTest extends BaseTest {
    */
   @Test(groups  = {"smoke", "regression"})
   @Description("Test Cheapest Flight Date Search is Sorted by Price")
-  public void testChepestFlightDateSearchIsSortedbyPrice() {
+  public void testCheapestFlightDateSearchIsSortedByPrice() {
 
     Response response =
         RestAssured.given()

@@ -71,6 +71,11 @@ This project is an API Test Automation framework built using Java, Rest Assured,
     - **smoke**: Critical test cases that validate core API functionality and essential business flows
     - **regression**: Comprehensive test coverage including both positive and negative scenarios for thorough validation
 
+- **Test Results Mapping & Collection:**
+  - Automated test results collector that maps test methods to test case IDs and generates structured JSON reports for external test management systems integration.
+  - The `TestResultsReporter` implements TestNG's `IReporter` interface to capture comprehensive test execution data including outcomes, durations, and iteration details for parameterized tests.
+  - Results are exported in JSON format to `test-results/test-results-report.json` with support for both single execution and multi-iteration test scenarios.
+
 
 ## About the Framework
 
@@ -121,7 +126,9 @@ amadeus-rest-assured/
 │       │   ├── testUtils/                                  # Test utility classes
 │       │   │   ├── Assertion.java                          # Custom assertions with logging
 │       │   │   ├── LoggingMatcher.java                     # Hamcrest matcher with logging
-│       │   │   └── TestResultLoggerListener.java           # TestNG listener for logging test events
+│       │   │   ├── TestResultLoggerListener.java           # TestNG listener for logging test events
+│       │   │   ├── TestResultsReporter.java                 # TestNG IReporter for JSON test results export
+│       │   │   └── TestResultsRecords.java                  # Java records for test result data models
 │       │   │ 
 │       │   └── tests/                                      # Test classes by API domain
 │       │       ├── airports/

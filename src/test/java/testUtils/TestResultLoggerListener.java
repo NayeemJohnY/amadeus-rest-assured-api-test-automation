@@ -19,16 +19,18 @@ public class TestResultLoggerListener implements ITestListener {
    */
   @Override
   public void onTestStart(ITestResult result) {
-    logger.info("<=========== Test started: {} ===========>", result.getMethod().getMethodName());
+    logger.info("<=========== Test Started : {} ===========>", result.getMethod().getMethodName());
     Object[] params = result.getParameters();
-    if (params == null || params.length == 0) {
-      return;
+    if (params != null && params.length > 0) {
+      params =
+          Arrays.stream(params)
+              .filter(param -> param != null && !(param instanceof ITestContext))
+              .toArray();
+
+      if (params.length > 0) {
+        logger.info("Test Data: {}", Arrays.toString(params));
+      }
     }
-    params =
-        Arrays.stream(params)
-            .map(param -> (param instanceof ITestContext) ? "ITestContext Parameter" : param)
-            .toArray();
-    logger.info("Test Data: {}", Arrays.toString(params));
   }
 
   /**
@@ -38,7 +40,7 @@ public class TestResultLoggerListener implements ITestListener {
    */
   @Override
   public void onTestSuccess(ITestResult result) {
-    logger.info("<=========== Test passed: {} ===========>\n", result.getMethod().getMethodName());
+    logger.info("<=========== Test Passed : {} ===========>\n", result.getMethod().getMethodName());
   }
 
   /**
@@ -49,7 +51,7 @@ public class TestResultLoggerListener implements ITestListener {
   @Override
   public void onTestFailure(ITestResult result) {
     logger.error(
-        "<=========== Test failed: {} ===========>",
+        "<=========== Test Failed : {} ===========>",
         result.getMethod().getMethodName(),
         result.getThrowable());
   }
@@ -61,6 +63,6 @@ public class TestResultLoggerListener implements ITestListener {
    */
   @Override
   public void onTestSkipped(ITestResult result) {
-    logger.warn("<=========== Test skipped: {} ===========>\n", result.getMethod().getMethodName());
+    logger.warn("<=========== Test Skipped : {} ===========>\n", result.getMethod().getMethodName());
   }
 }

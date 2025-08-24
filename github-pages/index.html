@@ -161,6 +161,31 @@
                     <code>mvn test -Dgroups="smoke,regression"</code> for combined execution.
                 </dd>
 
+                <dt><strong>How does the framework handle test results collection and mapping?</strong></dt>
+                <dd>A: The framework features a comprehensive test results collection system using <a
+                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/test/java/testUtils/TestResultsReporter.java"
+                        target="_blank" class="code-link"><code>TestResultsReporter.java</code></a> that implements TestNG's 
+                    <code>IReporter</code> interface. This reporter automatically maps test methods to test case IDs using a 
+                    <code>test-plan-suite.json</code> configuration file and generates structured JSON reports at 
+                    <code>test-results/test-results-report.json</code>. The system captures test outcomes, execution durations, 
+                    and detailed iteration results for parameterized tests, with <a
+                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/test/java/testUtils/TestResultsRecords.java"
+                        target="_blank" class="code-link"><code>TestResultsRecords.java</code></a> providing clean data models 
+                    using Java records. This enables seamless integration with external test management systems and CI/CD pipelines.
+                </dd>
+
+                <dt><strong>How does the TestResultsReporter handle different test execution scenarios?</strong></dt>
+                <dd>A: The <a
+                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/test/java/testUtils/TestResultsReporter.java"
+                        target="_blank" class="code-link"><code>TestResultsReporter</code></a> is designed to handle both 
+                    single test executions and parameterized tests with multiple iterations. For parameterized tests, it creates 
+                    <code>TestIterationResult</code> records for each parameter set, tracking individual outcomes and durations. 
+                    The reporter uses <code>getNextIterationId()</code> to assign sequential IDs to iterations and 
+                    <code>withIterationResult()</code> to accumulate results. It correctly calculates test duration using 
+                    <code>endTime - startTime</code> and handles null safety by providing default values when test plan 
+                    configuration is missing. The final JSON report includes comprehensive test metadata for downstream processing.
+                </dd>
+
                 <dt><strong>How did I make assertions and debugging more insightful?</strong></dt>
                 <dd>A: Default assertions from TestNG or Rest Assured only provide pass/fail results without detailed
                     logs.

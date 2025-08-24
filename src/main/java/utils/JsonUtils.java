@@ -37,18 +37,38 @@ public class JsonUtils {
   }
 
   /**
-   * Converts a JSON input stream to a Map.
+   * Converts a JSON file from the classpath to a Map.
    *
-   * @param inputStream the input stream containing JSON data
+   * @param filename the name of the JSON file in the classpath
    * @return a Map representation of the JSON, or an empty map if conversion fails
    */
-  public static Map<String, Object> jsonToMap(InputStream inputStream) {
-    try {
+  public static Map<String, Object> jsonFileToMap(String filename) {
+    try (InputStream inputStream = JsonUtils.class.getClassLoader().getResourceAsStream(filename)) {
+
+      if (inputStream == null) {
+        logger.error("Resource not found: {}" , filename);
+        return Collections.emptyMap();
+      }
       return objectMapper.readValue(inputStream, new TypeReference<Map<String, Object>>() {});
     } catch (IOException e) {
       logger.error("Error occurred while accessing Stream", e);
     }
     return Collections.emptyMap();
+  }
+
+   /**
+   * Converts a Map to a JSON string.
+   *
+   * @param map the Map
+   * @return a JSON String representation of the Map, or an empty string if conversion fails
+   */
+  public static String mapToJson(Map<String, Object> map) {
+    try {
+      return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(map);
+    } catch (JsonProcessingException e) {
+      logger.error("Error occurred while converting Map to JSON", e);
+    }
+    return "";
   }
 
   /**
@@ -63,7 +83,7 @@ public class JsonUtils {
     try {
       return objectMapper.readValue(json, clazz);
     } catch (JsonProcessingException e) {
-      logger.error("Error occuured while parsing JSON to Record", e);
+      logger.error("Error occurred while parsing JSON to Record", e);
     }
     return null;
   }
@@ -87,7 +107,7 @@ public class JsonUtils {
     try {
       return objectMapper.readValue(inputStream, clazz);
     } catch (IOException e) {
-      logger.error("Error occuured while accessing Stream", e);
+      logger.error("Error occurred while accessing Stream", e);
     }
     return null;
   }
