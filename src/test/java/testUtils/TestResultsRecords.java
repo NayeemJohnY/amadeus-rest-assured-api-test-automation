@@ -1,3 +1,11 @@
+/**
+ * About test-results collection into a JSON:
+ * 
+ * This file defines Java records used for collecting and structuring test execution results.
+ * The framework uses these records to aggregate test outcomes, durations, and parameters,
+ * and then exports all results into a single JSON file (`test-results/test-results-report.json`)
+ * for reporting and integration with external systems.
+ */
 package testUtils;
 
 import java.util.ArrayList;

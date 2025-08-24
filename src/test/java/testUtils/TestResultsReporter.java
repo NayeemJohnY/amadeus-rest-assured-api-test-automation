@@ -1,3 +1,10 @@
+/**
+ * About test-results collection into a JSON:
+ * 
+ * This reporter collects all TestNG test execution results, maps them to test case IDs,
+ * and exports the aggregated data into a structured JSON file (`test-results/test-results-report.json`).
+ * The JSON includes test plan metadata, outcomes, durations, and iteration details for parameterized tests.
+ */
 package testUtils;
 
 import java.io.File;
