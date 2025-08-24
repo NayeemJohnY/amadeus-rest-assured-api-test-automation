@@ -7,8 +7,10 @@ import java.util.Map;
 /** Java records */
 public class TestResultsRecords {
 
+  /** Represents a test case info with testcaseId. */
   public record TestCaseInfo(String testCaseId) {}
 
+  /** Represents a suite of test cases within a test plan. */
   public record TestPlanSuite(
       String testPlanName, String testSuiteName, Map<String, TestCaseInfo> testCases) {}
 
