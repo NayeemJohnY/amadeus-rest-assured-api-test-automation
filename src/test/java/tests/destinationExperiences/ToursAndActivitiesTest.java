@@ -22,7 +22,7 @@ import tests.BaseTest;
 @Epic("Destination Experiences")
 @Feature("Search Destination Tour and Activities")
 @Severity(SeverityLevel.NORMAL)
-public class ToursAndActivitesTest extends BaseTest {
+public class ToursAndActivitiesTest extends BaseTest {
 
   public static final String ACTIVITIES_SEARCH = readProperties.getProperty("activitiesSearch");
 

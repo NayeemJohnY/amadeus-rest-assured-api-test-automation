@@ -138,7 +138,7 @@ amadeus-rest-assured/
 │       │       │   └── TransferOffersTest.java             # Car/transfer offer API tests
 │       │       │
 │       │       ├── destinationExperiences/
-│       │       │   └── ToursAndActivitesTest.java          # Destination experience API tests
+│       │       │   └── ToursAndActivitiesTest.java          # Destination experience API tests
 │       │       │
 │       │       ├── flights/
 │       │       │   ├── FlightOffersTest.java               # Flight offer API tests

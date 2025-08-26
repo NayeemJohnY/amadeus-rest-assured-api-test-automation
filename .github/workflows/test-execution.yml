@@ -87,6 +87,14 @@ jobs:
           path: test-results
           retention-days: 3
 
+      - name: Post Test Results to Azure DevOps
+        uses: NayeemJohnY/actions/post-test-results-to-azure-devops@main
+        with:
+          test-results-json: test-results/test-results-report.json
+          azure-token: ${{ secrets.AZURE_TOKEN }}
+          org-url: ${{ secrets.AZURE_ORG_URL }}
+          project: ${{ secrets.AZURE_PROJECT }}
+
       - name: Build Maven Javadocs
         if: success() || failure()
         run: mvn javadoc:javadoc javadoc:test-javadoc

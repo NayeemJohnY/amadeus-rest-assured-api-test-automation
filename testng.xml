@@ -25,7 +25,7 @@
     </test>
     <test name="DestinationExperiences">
         <classes>
-            <class name="tests.destinationExperiences.ToursAndActivitesTest" />
+            <class name="tests.destinationExperiences.ToursAndActivitiesTest" />
         </classes>
     </test>
     <test name="HotelsSearch">
