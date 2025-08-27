@@ -7,11 +7,6 @@ on:
         required: false
         type: number
         description: Token Expiry Override (Seconds)
-
-      parallel:
-        description: Run Test in Parallel
-        type: boolean
-        default: false
       
       test_name:
         description: Test Method / Test class Name (e.g., MyTestClass#myTestMethod or MyTestClass1, MyTestClass2)
@@ -22,6 +17,16 @@ on:
         description: Test Group (e.g., smoke,regression or smoke)
         required: false
         type: string
+
+      parallel:
+        description: Run Test in Parallel
+        type: boolean
+        default: false
+
+      publish_report:
+        description: Publish Allure Report, Javadoc and Azure Devops Test Results
+        type: boolean
+        default: true
 
 permissions:
   id-token: write
@@ -88,6 +93,7 @@ jobs:
           retention-days: 3
 
       - name: Post Test Results to Azure DevOps
+        if: ${{ (success() || failure()) && inputs.publish_report }}
         uses: NayeemJohnY/actions/post-test-results-to-azure-devops@main
         with:
           test-results-json: test-results/test-results-report.json
@@ -96,16 +102,16 @@ jobs:
           project: ${{ secrets.AZURE_PROJECT }}
 
       - name: Build Maven Javadocs
-        if: success() || failure()
+        if: ${{ (success() || failure()) && inputs.publish_report }}
         run: mvn javadoc:javadoc javadoc:test-javadoc
 
       - name: Prepare GitHub Pages Content
-        if: success() || failure()
+        if: ${{ (success() || failure()) && inputs.publish_report }}
         uses: NayeemJohnY/actions/prepare-github-pages@main
         with:
-          reports-dir: test-results/allure-report
-          javadoc-dir: target/reports
+         reports-dir: test-results/allure-report
+         javadoc-dir: target/reports
 
       - name: Deploy GitHub Pages
-        if: success() || failure()
+        if: ${{ (success() || failure()) && inputs.publish_report }}
         uses: NayeemJohnY/actions/deploy-github-pages-site@main

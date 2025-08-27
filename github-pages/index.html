@@ -27,6 +27,9 @@
             <a href="./allure-report/index.html">
                 <em class="fa-solid fa-chart-line"></em> Allure Test Report
             </a>
+            <a href="./allure-report/test-results-report.json">
+                <em class="fa-solid fa-file-code"></em> Test Results JSON
+            </a>
             <a href="./javadocs/apidocs/index.html">
                 <em class="fa-solid fa-book"></em> Main Javadocs
             </a>
@@ -39,255 +42,91 @@
             <h2>Framework Design: Q&amp;A</h2>
             <dl>
                 <dt><strong>How did a real interview experience inspire this framework?</strong></dt>
-                <dd>A: My motivation began after an interview where I was asked to design test cases using Rest Assured
-                    and
-                    JUnit. At that time, I struggled with implementing the object mapper, which inspired me to revisit
-                    and
-                    master these concepts, leading to the creation of this framework.</dd>
+                <dd>A: After an interview where I struggled with object mapping in Rest Assured and TestNG, I rebuilt
+                    the
+                    framework to focus on modular design, robust data modeling, and reusable utilities. This led to the
+                    creation of classes like <code>JsonUtils.java</code> for parsing and mapping API responses
+                    efficiently.</dd>
 
                 <dt><strong>What led me to explore Amadeus APIs for this project?</strong></dt>
-                <dd>A: I had an interview with a company using Airports and Airlines APIs. To gain confidence in how
-                    such
-                    systems behave, I explored Amadeus APIs, focusing on reference data and resources related to
-                    airports,
-                    airlines, and hotels. I created Java record classes like <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/main/java/records/Location.java"
-                        target="_blank" class="code-link"><code>Location.java</code></a>, <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/main/java/records/Address.java"
-                        target="_blank" class="code-link"><code>Address.java</code></a>,
-                    and <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/main/java/records/AirportQueriesWrapper.java"
-                        target="_blank" class="code-link"><code>AirportQueriesWrapper.java</code></a> to handle
-                    API responses, and
-                    used <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/main/java/utils/JsonUtils.java"
-                        target="_blank" class="code-link"><code>JsonUtils.java</code></a> for JSON parsing and
-                    object mapping.</dd>
+                <dd>A: My interest in Amadeus APIs was sparked by an airline domain interview. I developed record
+                    classes
+                    such as <code>AirportQueriesWrapper.java</code> and <code>Location.java</code> to model API data,
+                    and used <code>JsonUtils.java</code> for seamless JSON handling, ensuring the framework could
+                    adapt to various travel-related endpoints.</dd>
 
                 <dt><strong>What core design values shaped my approach?</strong></dt>
-                <dd>A: My approach was guided by a strong focus on modularity, reusability, and maintainability, in
-                    addition
-                    to robust logging. I structured the framework so that each component—such as authentication, request
-                    building, response validation, and reporting—could be easily extended or reused for new APIs or test
-                    scenarios. I used Java record classes for clear data modeling, utility classes for common
-                    operations,
-                    and followed a package-by-feature structure to keep the codebase organized and scalable. For
-                    logging,
-                    I
-                    leveraged Rest Assured's filter mechanism to add custom logging and validation by implementing the
-                    <code>Filter</code> interface in <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/main/java/utils/RestAssuredLoggerFilter.java"
-                        target="_blank" class="code-link"><code>RestAssuredLoggerFilter.java</code></a>, ensuring that
-                    every request and response could be traced and debugged efficiently. This holistic approach made the
-                    framework both powerful and easy to maintain as it grows.
+                <dd>A: The framework emphasizes modularity, reusability, and maintainability. Data models are defined
+                    using Java records, while utilities like <code>RestAssuredLoggerFilter.java</code> and
+                    <code>TokenManager.java</code> provide centralized logging and authentication. The
+                    package-by-feature
+                    structure keeps the codebase organized and scalable.
                 </dd>
 
-                <dt><strong>Q: How did I implement custom logging?</strong></dt>
-                <dd>A: My custom filter in <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/main/java/utils/RestAssuredLoggerFilter.java"
-                        target="_blank" class="code-link"><code>RestAssuredLoggerFilter.java</code></a> logs the
-                    request method and
-                    URI at the info level, and headers and body at the debug level. The <code>filter()</code> method
-                    uses
-                    Log4j2's <code>Logger</code> to capture request/response details and stores the status code in
-                    <code>ITestResult</code> context for retry analysis. This keeps logs clean during normal runs, but
-                    allows for detailed inspection when debugging by adjusting the Log4j configuration.
-                </dd>
+                <dt><strong>How did I implement custom logging?</strong></dt>
+                <dd>A: Custom logging is achieved via <code>RestAssuredLoggerFilter.java</code>, which logs request
+                    methods, URIs, headers, and bodies at different log levels. It integrates with Log4j2 for flexible
+                    log management and stores status codes for retry analysis, making debugging and traceability
+                    straightforward.</dd>
 
                 <dt><strong>What challenges did I face with API rate limits, and how did I solve them?</strong></dt>
-                <dd>A: When running tests on GitHub, I encountered 429 errors due to faster execution. To handle this, I
-                    implemented a retry mechanism using TestNG's <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/test/java/testUtils/RetryAnalyzer.java"
-                        target="_blank" class="code-link"><code>RetryAnalyzer.java</code></a> and <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/test/java/testUtils/AnnotationTransformer.java"
-                        target="_blank" class="code-link"><code>AnnotationTransformer.java</code></a>. The
-                    <code>RestAssuredLoggerFilter</code> sets the
-                    response status code in the <code>ITestResult</code> context via
-                    <code>result.setAttribute("statusCode", response.getStatusCode())</code>, which the retry analyzer's
-                    <code>retry()</code> method uses to decide if
-                    a test should be retried. This approach ensures robust and scalable error handling across the entire
-                    test suite.
+                <dd>A: Frequent 429 errors during fast test runs were solved by implementing a retry mechanism using
+                    <code>RetryAnalyzer.java</code> and <code>AnnotationTransformer.java</code>. The framework checks
+                    response status codes and automatically retries failed tests, improving reliability in CI/CD
+                    pipelines.
                 </dd>
 
-                <dt><strong>How did I ensure API credentials and secrets are truly secure?</strong></dt>
-                <dd>A: Since Amadeus APIs require OAuth 2.0 tokens, I needed to securely store the client ID and secret.
-                    Initially, I stored them as plain text in <code>config.properties</code>, but later implemented AES
-                    256-bit encryption using <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/main/java/utils/EncryptionUtils.java"
-                        target="_blank" class="code-link"><code>EncryptionUtils.java</code></a>. The
-                    <code>encrypt()</code> and
-                    <code>decrypt()</code> methods use the <code>Cipher</code> class with AES algorithm. The encrypted
-                    secrets are stored in the config file, while the encryption key is kept as an environment variable,
-                    ensuring sensitive data is protected. The <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/main/java/utils/ReadProperties.java"
-                        target="_blank" class="code-link"><code>ReadProperties.java</code></a> utility handles
-                    decryption at runtime.
-                </dd>
+                <dt><strong>How did I ensure API credentials and secrets are secure?</strong></dt>
+                <dd>A: Credentials are encrypted using AES-256 in <code>EncryptionUtils.java</code> and decrypted at
+                    runtime via <code>ReadProperties.java</code>. The encryption key is stored as an environment
+                    variable, ensuring sensitive data is never exposed in source code or config files.</dd>
 
-                <dt><strong>How does the TokenManager work and why is it thread-safe?</strong></dt>
-                <dd>A: The <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/main/java/utils/TokenManager.java"
-                        target="_blank" class="code-link"><code>TokenManager.java</code></a> provides automatic OAuth2 token 
-                    lifecycle management with caching and expiry detection. It uses <code>synchronized</code> blocks to ensure 
-                    thread safety during parallel test execution. The token is refreshed 30 seconds before expiration to prevent 
-                    authentication failures. For testing purposes, the encryption key can be overridden using the 
-                    <code>TOKEN_EXPIRY_SECONDS</code> environment variable or system property. The token generation request is 
-                    isolated from global RestAssured specifications by temporarily clearing and restoring the request specification, 
-                    ensuring no test-level configurations interfere with authentication.
-                </dd>
+                <dt><strong>How does the TokenManager work and maintain thread safety?</strong></dt>
+                <dd>A: <code>TokenManager.java</code> manages OAuth2 tokens with caching and expiry detection. It uses
+                    synchronized blocks to ensure thread safety during parallel test execution, refreshing tokens before
+                    expiry and isolating authentication logic from global Rest Assured specifications.</dd>
 
                 <dt><strong>How does the framework support parallel test execution?</strong></dt>
-                <dd>A: The framework is designed for parallel execution at both method and class levels using TestNG's parallel 
-                    execution capabilities. The <code>TokenManager</code> ensures thread-safe token sharing across concurrent 
-                    threads, while the <code>BaseTest</code> class refreshes tokens before each test method to guarantee valid 
-                    authentication. Parallel execution can be configured in <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/testng.xml"
-                        target="_blank" class="code-link"><code>testng.xml</code></a> with <code>parallel="methods"</code> 
-                    or <code>parallel="classes"</code>, and thread count can be controlled via Maven with 
-                    <code>mvn test -DthreadCount=4</code>.
+                <dd>A: Parallel execution is enabled via TestNG configuration (<code>testng.xml</code>), with
+                    thread-safe
+                    token sharing and per-test authentication refresh. The <code>BaseTest</code> class ensures each test
+                    method has a valid token, supporting both method and class-level parallelism.</dd>
+
+                <dt><strong>How are tests organized for flexible execution?</strong></dt>
+                <dd>A: Tests are grouped using TestNG's <code>@Test(groups = {...})</code> annotation (e.g., smoke,
+                    regression) and support parameterized runs. The structure in <code>src/test/java/tests/</code>
+                    allows targeted execution and comprehensive coverage for different scenarios.</dd>
+
+                <dt><strong>How does the framework handle test results collection?</strong></dt>
+                <dd>A: Test results are collected using <code>TestResultsReporter.java</code> and
+                    <code>TestResultsRecords.java</code>,
+                    which export structured JSON for integration with systems like Azure DevOps.
+                    <code>TestResultLoggerListener.java</code>
+                    (ITestListener) logs test events, parameters, and separators, making logs readable and debugging
+                    easier, especially for data-driven tests.</dd>
+
+                <dt><strong>How did I enhance assertions and debugging?</strong></dt>
+                <dd>A: Custom assertion wrappers in <code>Assertion.java</code> and matcher extensions in
+                    <code>LoggingMatcher.java</code> log detailed comparisons and outcomes. This provides clear insights
+                    into test failures and successes, improving traceability and debugging efficiency.
                 </dd>
 
-                <dt><strong>How are tests organized and categorized for flexible execution?</strong></dt>
-                <dd>A: Tests are logically organized using TestNG's <code>@Test(groups = {...})</code> annotation for targeted 
-                    execution scenarios:
-                    <ul style="margin-top: 10px; margin-left: 20px;">
-                        <li><strong>smoke</strong>: Critical test cases that validate core API functionality and essential 
-                            business flows (e.g., basic flight search, airport lookup)</li>
-                        <li><strong>regression</strong>: Comprehensive test coverage including both positive and negative 
-                            scenarios for thorough validation (e.g., invalid parameters, edge cases)</li>
-                    </ul>
-                    This allows for flexible test execution: <code>mvn test -Dgroups=smoke</code> for quick validation, 
-                    <code>mvn test -Dgroups=regression</code> for comprehensive testing, or 
-                    <code>mvn test -Dgroups="smoke,regression"</code> for combined execution.
-                </dd>
+                <dt><strong>Why choose Allure for reporting?</strong></dt>
+                <dd>A: Allure provides detailed, user-friendly reports by capturing request and response data through
+                    custom filters. The configuration in <code>pom.xml</code> and output in <code>allure-results/</code>
+                    make it easy to visualize test execution and share results with stakeholders.</dd>
 
-                <dt><strong>How does the framework handle test results collection and mapping?</strong></dt>
-                <dd>A: The framework features a comprehensive test results collection system using <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/test/java/testUtils/TestResultsReporter.java"
-                        target="_blank" class="code-link"><code>TestResultsReporter.java</code></a> that implements TestNG's 
-                    <code>IReporter</code> interface. This reporter automatically maps test methods to test case IDs using a 
-                    <code>test-plan-suite.json</code> configuration file and generates structured JSON reports at 
-                    <code>test-results/test-results-report.json</code>. The system captures test outcomes, execution durations, 
-                    and detailed iteration results for parameterized tests, with <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/test/java/testUtils/TestResultsRecords.java"
-                        target="_blank" class="code-link"><code>TestResultsRecords.java</code></a> providing clean data models 
-                    using Java records. This enables seamless integration with external test management systems and CI/CD pipelines.
-                </dd>
+                <dt><strong>How is CI/CD integrated?</strong></dt>
+                <dd>A: The CI/CD pipeline uses Java 21+ Docker containers, GitHub Actions, GitHub Pages, and Azure
+                    DevOps
+                    for automated testing, reporting, and deployment. The workflow in
+                    <code>.github/workflows/test-execution.yml</code>
+                    orchestrates test execution, report generation, and publishing.</dd>
 
-                <dt><strong>How does the TestResultsReporter handle different test execution scenarios?</strong></dt>
-                <dd>A: The <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/test/java/testUtils/TestResultsReporter.java"
-                        target="_blank" class="code-link"><code>TestResultsReporter</code></a> is designed to handle both 
-                    single test executions and parameterized tests with multiple iterations. For parameterized tests, it creates 
-                    <code>TestIterationResult</code> records for each parameter set, tracking individual outcomes and durations. 
-                    The reporter uses <code>getNextIterationId()</code> to assign sequential IDs to iterations and 
-                    <code>withIterationResult()</code> to accumulate results. It correctly calculates test duration using 
-                    <code>endTime - startTime</code> and handles null safety by providing default values when test plan 
-                    configuration is missing. The final JSON report includes comprehensive test metadata for downstream processing.
-                </dd>
-
-                <dt><strong>How did I make assertions and debugging more insightful?</strong></dt>
-                <dd>A: Default assertions from TestNG or Rest Assured only provide pass/fail results without detailed
-                    logs.
-                    To address this, I created a wrapper utility class <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/test/java/testUtils/Assertion.java"
-                        target="_blank" class="code-link"><code>Assertion.java</code></a> with methods like
-                    <code>assertEquals()</code> and <code>assertTrue()</code> that log assertion
-                    details using <code>assertWithLog()</code>, including actual and expected values, for both
-                    successful
-                    and failed assertions. I also created
-                    a <a href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/test/java/testUtils/LoggingMatcher.java"
-                        target="_blank" class="code-link"><code>LoggingMatcher.java</code></a> that extends
-                    Hamcrest's
-                    <code>TypeSafeMatcher</code> with an overridden <code>matchesSafely()</code> method to log
-                    matcher-based
-                    assertions, making validation results transparent and easy to trace.
-                </dd>
-
-                <dt><strong>How did I make test execution logs truly useful for debugging?</strong></dt>
-                <dd>A: To make logs more readable and distinguish between test cases, I implemented a TestNG
-                    <code>ITestListener</code> in <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/test/java/testUtils/TestResultLoggerListener.java"
-                        target="_blank" class="code-link"><code>TestResultLoggerListener.java</code></a> with
-                    methods like
-                    <code>onTestStart()</code>, <code>onTestSuccess()</code>, and <code>onTestFailure()</code> that log
-                    separator lines and method parameters using <code>result.getParameters()</code> at the start,
-                    success,
-                    and
-                    failure of each test. This is especially useful for data-driven tests, as it logs the specific data
-                    used
-                    for each run.
-                </dd>
-
-                <dt><strong>Why did I choose Allure for reporting, and how do I keep results meaningful?</strong></dt>
-                <dd>A: The default TestNG report was not detailed or user-friendly, so I implemented Allure reporting. I
-                    added the Allure dependency and a Rest Assured filter from the Allure library to capture request and
-                    response details in the report. To maintain report history, I manually copy the history folder from
-                    the
-                    previous report into the <code>allure-results</code> directory before generating a new report.</dd>
-
-                <dt><strong>Q: How did I integrate the framework with CI/CD and GitHub Pages?</strong></dt>
-                <dd>A: For CI/CD, I used a containerized environment with Maven and a Java container to run tests in
-                    GitHub
-                    Actions. Tests are organized in packages like <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/tree/main/src/test/java/tests/airports"
-                        target="_blank" class="code-link"><code>tests.airports</code></a>, <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/tree/main/src/test/java/tests/flights"
-                        target="_blank" class="code-link"><code>tests.flights</code></a>, <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/tree/main/src/test/java/tests/hotels"
-                        target="_blank" class="code-link"><code>tests.hotels</code></a>, and <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/tree/main/src/test/java/tests/destinationExperiences"
-                        target="_blank" class="code-link"><code>tests.destinationExperiences</code></a>, all
-                    extending <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/test/java/tests/BaseTest.java"
-                        target="_blank" class="code-link"><code>BaseTest.java</code></a>.
-                    After running <code>mvn clean test</code>, the Allure report is generated using
-                    <code>allure generate</code>. The Allure CLI is
-                    installed in the container, previous results are downloaded and merged for history via copying the
-                    <code>history/</code> folder, and the new report
-                    is published to GitHub Pages. GitHub Pages hosts the main Javadocs, test Javadocs, and the latest
-                    Allure
-                    report, providing easy access to results and trends. The <a
-                        href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/testng.xml"
-                        target="_blank" class="code-link"><code>testng.xml</code></a> configuration includes
-                    listeners for retry
-                    analysis and logging.
-                </dd>
-
-                <dt><strong>How is the project structured for clarity and maintainability?</strong></dt>
-                <dd>A: The project follows a clear separation of concerns:
-                    <ul style="margin-top: 10px; margin-left: 20px;">
-                        <li><strong>Main Source:</strong> <code>src/main/java/</code> contains utilities (<a
-                                href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/tree/main/src/main/java/utils"
-                                target="_blank" class="code-link"><code>utils/</code></a>) and data
-                            models (<a
-                                href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/tree/main/src/main/java/records"
-                                target="_blank" class="code-link"><code>records/</code></a>)
-                        </li>
-                        <li><strong>Test Source:</strong> <code>src/test/java/</code> contains test utilities (<a
-                                href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/tree/main/src/test/java/testUtils"
-                                target="_blank" class="code-link"><code>testUtils/</code></a>) and organized test
-                            packages (<a
-                                href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/tree/main/src/test/java/tests"
-                                target="_blank" class="code-link"><code>tests/</code></a>) by API domain including 
-                            airports, flights, hotels, and destination experiences
-                        </li>
-                        <li><strong>Configuration:</strong> <a
-                                href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/pom.xml"
-                                target="_blank" class="code-link"><code>pom.xml</code></a> for Maven dependencies,
-                            <a href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/testng.xml"
-                                target="_blank" class="code-link"><code>testng.xml</code></a> for test execution,
-                            <a href="https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/blob/main/src/main/resources/config.properties"
-                                target="_blank" class="code-link"><code>config.properties</code></a> for API credentials
-                            and endpoints
-                        </li>
-                        <li><strong>Reporting:</strong> <code>allure-results/</code> for raw test data,
-                            <code>github-pages/</code> for published reports and documentation
-                        </li>
-                        <li><strong>CI/CD:</strong> GitHub Actions workflows handle automated testing, report
-                            generation,
-                            and deployment</li>
-                    </ul>
+                <dt><strong>How is the project structured for clarity?</strong></dt>
+                <dd>A: The project separates main and test utilities into <code>src/main/java/</code> and
+                    <code>src/test/java/</code>, with organized directories for configuration, reports, and workflows.
+                    This structure supports maintainability and scalability as the framework evolves.
                 </dd>
             </dl>
         </div>

@@ -60,8 +60,13 @@ This project is an API Test Automation framework built using Java, Rest Assured,
 - **Extensible Utilities:**
   - Utilities for JSON serialization/deserialization (`JsonUtils`) and record-based data models simplify test data handling and validation.
 
-- **CI/CD Ready:**
-  - Includes a sample GitHub Actions workflow for automated test execution and reporting.
+- **CI/CD Ready with GitHub Actions & Azure DevOps:**
+  - Includes a comprehensive GitHub Actions workflow (`.github/workflows/test-execution.yml`) for automated test execution, reporting, and deployment.
+  - Automated containerized test execution using Maven and Java 21+ Docker containers.
+  - Allure report generation and publishing to GitHub Pages with historical trend tracking.
+  - Javadoc generation and deployment for both main and test source code.
+  - Secure credential management using GitHub Secrets for API authentication.
+  - **Azure DevOps Integration:** Supports posting test results to Azure DevOps for centralized test management and reporting. Test results can be exported in compatible formats and uploaded to Azure DevOps pipelines for further analysis.
 
 - **Parallel Test Execution:**
   - Framework supports parallel test execution at both method and class levels through TestNG configuration, with thread-safe token management ensuring no conflicts during concurrent runs.
@@ -71,10 +76,12 @@ This project is an API Test Automation framework built using Java, Rest Assured,
     - **smoke**: Critical test cases that validate core API functionality and essential business flows
     - **regression**: Comprehensive test coverage including both positive and negative scenarios for thorough validation
 
-- **Test Results Mapping & Collection:**
-  - Automated test results collector that maps test methods to test case IDs and generates structured JSON reports for external test management systems integration.
-  - The `TestResultsReporter` implements TestNG's `IReporter` interface to capture comprehensive test execution data including outcomes, durations, and iteration details for parameterized tests.
-  - Results are exported in JSON format to `test-results/test-results-report.json` with support for both single execution and multi-iteration test scenarios.
+- **Advanced Test Results Collection & Reporting:**
+  - **TestResultsReporter**: Custom TestNG `IReporter` implementation that generates structured JSON reports for external test management systems integration.
+  - Maps test methods to test case IDs using a `test-plan-suite.json` configuration file for traceability.
+  - Captures comprehensive test execution data including outcomes, durations, and detailed iteration results for parameterized tests.
+  - Results exported in JSON format to `test-results/test-results-report.json`.
+  - Supports both single execution and multi-iteration test scenarios with sequential iteration tracking.
 
 
 ## About the Framework
@@ -126,9 +133,11 @@ amadeus-rest-assured/
 │       │   ├── testUtils/                                  # Test utility classes
 │       │   │   ├── Assertion.java                          # Custom assertions with logging
 │       │   │   ├── LoggingMatcher.java                     # Hamcrest matcher with logging
-│       │   │   ├── TestResultLoggerListener.java           # TestNG listener for logging test events
-│       │   │   ├── TestResultsReporter.java                 # TestNG IReporter for JSON test results export
-│       │   │   └── TestResultsRecords.java                  # Java records for test result data models
+│       │   │   ├── TestResultLoggerListener.java           # TestNG listener for detailed test execution logging
+│       │   │   ├── TestResultsReporter.java                # TestNG IReporter for structured JSON test results export
+│       │   │   ├── TestResultsRecords.java                 # Java records for test result data models
+│       │   │   ├── AnnotationTransformer.java              # TestNG transformer for retry mechanism configuration
+│       │   │   └── RetryAnalyzer.java                      # Custom retry logic for handling API rate limits
 │       │   │ 
 │       │   └── tests/                                      # Test classes by API domain
 │       │       ├── airports/
@@ -152,9 +161,11 @@ amadeus-rest-assured/
 │  
 │  
 ├── testng.xml                                              # TestNG suite configuration
+├── .github/
+│   └── workflows/
+│       └── test-execution.yml                              # GitHub Actions CI/CD workflow
 │  
-├── target/                                                 # Maven build output
-└── test-results/                                           # Test logs and results
+└── github-pages/                                           # Generated documentation and reports for GitHub Pages
 ```
 
 ## TokenManager Mechanism
@@ -207,6 +218,46 @@ You can override the encryption key for testing purposes by setting:
 See [`src/test/java/tests/flights/FlightOffersTest.java`](src/test/java/tests/flights/FlightOffersTest.java) for a sample test that validates flight offer search functionality.
 
 ---
+
+## GitHub Actions CI/CD
+
+The framework features a robust GitHub Actions workflow (`test-execution.yml`) for automated API test execution, flexible configuration, and rich reporting.
+
+### 🚀 **Workflow Capabilities**
+- **Environment Setup**: Installs Java 21+ and Maven for containerized test runs
+- **Flexible Test Execution**: Supports running specific test methods, classes, or groups via workflow dispatch
+- **Parallel Processing**: Configurable parallel execution for faster feedback
+- **Multi-Environment Support**: Easily switch between test environments and API endpoints
+- **Secure Credential Management**: Uses GitHub Secrets for API authentication
+- **Allure Report Generation**: Automatically creates and publishes interactive test reports
+- **Historical Tracking**: Maintains test execution history and trends
+- **Documentation Deployment**: Auto-generates and deploys Javadocs for main and test sources
+- **GitHub Pages Integration**: Publishes reports and documentation to GitHub Pages
+- **Artifact Management**: Stores test results, logs, and reports as workflow artifacts
+- **Azure DevOps Integration**: Optionally posts test results to Azure Test Plans
+
+### ⚙️ **Configurable Parameters** (Manual Dispatch)
+| Parameter              | Description                | Example Values                     |
+| ---------------------- | -------------------------- | ---------------------------------- |
+| `test_name`            | Specific test method/class | `FlightOffersTest#testValidSearch` |
+| `test_group`           | Test group filtering       | `smoke`, `regression`              |
+| `TOKEN_EXPIRY_SECONDS` | Token expiry override      | `3600`                             |
+| `parallel`             | Enable parallel execution  | `true`/`false`                     |
+| `publish_report`       | Control report publishing  | `true`/`false`                     |
+
+### 📊 **Multi-Platform Reporting**
+The workflow automatically generates and publishes:
+- **📊 Allure Reports**: Historical test execution with trend analysis
+- **📖 JavaDoc**: API documentation for main and test code
+- **📄 JSON Results**: Structured test data for external integrations
+- **� Azure DevOps**: Test results posted to Azure Test Plans
+- **🌐 GitHub Pages**: Live deployment of all reports and documentation
+
+### � **Quick Access**
+- [🚀 View Workflow Runs](https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/actions)
+- [⚡ Manual Dispatch](https://github.com/NayeemJohnY/amadeus-rest-assured-api-test-automation/actions/workflows/test-execution.yml)
+- [📋 Workflow Configuration](/.github/workflows/test-execution.yml)
+
 
 <footer align="center">
   <a href="https://www.linkedin.com/in/nayeemjohny/" target="_blank">Connect with me on LinkedIn</a>
