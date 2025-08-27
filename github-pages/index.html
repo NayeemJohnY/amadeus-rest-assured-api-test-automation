@@ -103,7 +103,8 @@
                     which export structured JSON for integration with systems like Azure DevOps.
                     <code>TestResultLoggerListener.java</code>
                     (ITestListener) logs test events, parameters, and separators, making logs readable and debugging
-                    easier, especially for data-driven tests.</dd>
+                    easier, especially for data-driven tests.
+                </dd>
 
                 <dt><strong>How did I enhance assertions and debugging?</strong></dt>
                 <dd>A: Custom assertion wrappers in <code>Assertion.java</code> and matcher extensions in
@@ -121,7 +122,8 @@
                     DevOps
                     for automated testing, reporting, and deployment. The workflow in
                     <code>.github/workflows/test-execution.yml</code>
-                    orchestrates test execution, report generation, and publishing.</dd>
+                    orchestrates test execution, report generation, and publishing.
+                </dd>
 
                 <dt><strong>How is the project structured for clarity?</strong></dt>
                 <dd>A: The project separates main and test utilities into <code>src/main/java/</code> and
@@ -130,6 +132,56 @@
                 </dd>
             </dl>
         </div>
+
+        <div class="ado-images-container">
+            <h2>Azure DevOps Test Plan Integration</h2>
+            <p>Below are sample screenshots showing how test results are posted and visualized in Azure DevOps Test
+                Plans:</p>
+            <div class="ado-images-grid">
+                <figure>
+                    <img src="images/ado-progress-report.png" alt="ADO Progress Report" class="ado-img"
+                        onclick="enlargeImage(this)">
+                    <figcaption>Progress Report</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/ado-run-summary.png" alt="ADO Run Summary" class="ado-img"
+                        onclick="enlargeImage(this)">
+                    <figcaption>Run Summary</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/ado-test-result-summary.png" alt="ADO Test Result Summary" class="ado-img"
+                        onclick="enlargeImage(this)">
+                    <figcaption>Test Result Summary</figcaption>
+                </figure>
+                <figure>
+                    <img src="images/ado-test-results.png" alt="ADO Test Results" class="ado-img"
+                        onclick="enlargeImage(this)">
+                    <figcaption>Test Results in Azure DevOps</figcaption>
+                </figure>
+            </div>
+            <div id="adoModal" class="ado-modal" onclick="closeModal(event)">
+                <div class="ado-modal-content">
+                    <div class="ado-modal-image-container">
+                        <img id="adoModalImg" src="" alt="Enlarged Azure DevOps Screenshot">
+                    </div>
+                    <button class="ado-modal-close" onclick="closeModal(event)">Close</button>
+                </div>
+            </div>
+        </div>
+        <script>
+            function enlargeImage(img) {
+                var modal = document.getElementById('adoModal');
+                var modalImg = document.getElementById('adoModalImg');
+                modalImg.src = img.src;
+                modal.classList.add('active');
+            }
+            function closeModal(event) {
+                var modal = document.getElementById('adoModal');
+                if (event.target.classList.contains('ado-modal') || event.target.classList.contains('ado-modal-close')) {
+                    modal.classList.remove('active');
+                }
+            }
+        </script>
     </div>
 
     <footer
