@@ -2,7 +2,7 @@ name: Test Execution and Publish Report
 
 on:
   schedule:
-  - cron: "20 6 * * 1-5"
+  - cron: "40 8 * * 1-5"
   
   workflow_dispatch:
     inputs:
@@ -38,8 +38,8 @@ permissions:
 
 env:
   AMADEUS_TEST_SECRET: ${{ secrets.AMADEUS_TEST_SECRET }}
-  PARALLEL:  $ {{ inputs.parallel || 'true' }}
-  PUBLISH_REPORT: $ {{ inputs.publish_report || 'true' }}
+  PARALLEL: ${{ inputs.parallel != '' && inputs.parallel || 'true' }}
+  PUBLISH_REPORT: ${{ inputs.publish_report != '' && inputs.publish_report || 'true' }}
 
 jobs:
   test-execution:
