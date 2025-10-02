@@ -2,7 +2,7 @@ name: Test Execution and Publish Report
 
 on:
   schedule:
-  - cron: "55 11 * * 1-5"
+  - cron: "30 5 * * 1-5"
   
   workflow_dispatch:
     inputs:
@@ -38,8 +38,8 @@ permissions:
 
 env:
   AMADEUS_TEST_SECRET: ${{ secrets.AMADEUS_TEST_SECRET }}
-  PARALLEL: ${{ inputs.parallel == 'false' && 'false'  || 'true' }}
-  PUBLISH_REPORT: ${{ inputs.publish_report == 'false' && 'false'  || 'true' }}
+  PARALLEL: ${{ github.event_name == 'schedule' && 'true' || inputs.parallel }}
+  PUBLISH_REPORT: ${{ github.event_name == 'schedule' && 'true' || inputs.publish_report }}
 
 jobs:
   test-execution:
@@ -64,7 +64,7 @@ jobs:
         run: |
           EXTRA_PARAMS=""
       
-          if [ "${{ env.PARALLEL }}" = "true" ]; then
+          if [ "$PARALLEL" = "true" ]; then
             EXTRA_PARAMS+=" -Dparallel=true";
           fi
 
@@ -98,7 +98,7 @@ jobs:
           retention-days: 3
 
       - name: Post Test Results to Azure DevOps
-        if: ${{ (success() || failure()) && env.PUBLISH_REPORT }}
+        if: ${{ (success() || failure()) && env.PUBLISH_REPORT == 'true' }}
         uses: NayeemJohnY/actions/post-test-results-to-azure-devops@main
         with:
           test-results-json: test-results/test-results-report.json
@@ -107,7 +107,7 @@ jobs:
           project: ${{ secrets.AZURE_PROJECT }}
 
       - name: Build Maven Javadocs
-        if: ${{ (success() || failure()) && env.PUBLISH_REPORT }}
+        if: ${{ (success() || failure()) && env.PUBLISH_REPORT == 'true' }}
         run: mvn javadoc:javadoc javadoc:test-javadoc
 
       - name: Prepare GitHub Pages Content
@@ -119,5 +119,5 @@ jobs:
          test-results-json: test-results/test-results-report.json
 
       - name: Deploy GitHub Pages
-        if: ${{ (success() || failure()) && env.PUBLISH_REPORT }}
+        if: ${{ (success() || failure()) && env.PUBLISH_REPORT == 'true' }}
         uses: NayeemJohnY/actions/deploy-github-pages-site@main
