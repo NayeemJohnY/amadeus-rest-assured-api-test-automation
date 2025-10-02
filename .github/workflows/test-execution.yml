@@ -111,7 +111,7 @@ jobs:
         run: mvn javadoc:javadoc javadoc:test-javadoc
 
       - name: Prepare GitHub Pages Content
-        if: ${{ (success() || failure()) && env.PUBLISH_REPORT }}
+        if: ${{ (success() || failure()) && env.PUBLISH_REPORT == 'true' }}
         uses: NayeemJohnY/actions/prepare-github-pages@main
         with:
          allure-report-dir: test-results/allure-report
