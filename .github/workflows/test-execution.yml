@@ -2,7 +2,7 @@ name: Test Execution and Publish Report
 
 on:
   schedule:
-  - cron: "*/5 * * * *"
+  - cron: "30 5 * * 1-5"
   
   workflow_dispatch:
     inputs:
